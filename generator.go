@@ -350,6 +350,23 @@ func (g *Generator) writeManifests(fields []FieldInfo) error {
 		}
 	}
 
+	defaults := make(map[string]interface{})
+	for _, f := range fields {
+		key := strings.ToUpper(strings.ReplaceAll(f.Path, ".", "_"))
+		if f.IsSecret {
+			defaults[key] = ""
+		} else {
+			if f.Value != nil {
+				defaults[key] = f.Value
+			} else {
+				defaults[key] = ""
+			}
+		}
+	}
+	if err := g.writeYAML(filepath.Join(g.cfg.OutputDir, "defaults.yaml"), defaults); err != nil {
+		return err
+	}
+
 	return nil
 }
 
