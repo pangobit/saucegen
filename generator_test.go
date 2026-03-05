@@ -129,4 +129,21 @@ func TestWriteManifests(t *testing.T) {
 	if !found {
 		t.Error("DATABASE_PASSWORD not found in ExternalSecret")
 	}
+
+	// Verify defaults.yaml
+	defaultsData, err := os.ReadFile(filepath.Join(tmpDir, "defaults.yaml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var defaults map[string]interface{}
+	if err := yaml.Unmarshal(defaultsData, &defaults); err != nil {
+		t.Fatal(err)
+	}
+
+	if defaults["SERVER_PORT"] != "8080" {
+		t.Errorf("expected SERVER_PORT in defaults to be 8080, got %v", defaults["SERVER_PORT"])
+	}
+	if defaults["DATABASE_PASSWORD"] != "" {
+		t.Errorf("expected DATABASE_PASSWORD in defaults to be empty, got %v", defaults["DATABASE_PASSWORD"])
+	}
 }
