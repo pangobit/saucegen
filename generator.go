@@ -32,7 +32,10 @@ type Config struct {
 	OutputDir string
 	// ConfigAsSecret indicates if public fields should be generated as ExternalSecrets.
 	ConfigAsSecret bool
-	// ConfigStore is the name of the SecretStore for public configuration.\nConfigStore string\nSecretKeySeparator string\n}
+	// ConfigStore is the name of the SecretStore for public configuration.
+	ConfigStore        string
+	SecretKeySeparator string
+}
 
 // Generator handles the parsing of Go structs and emission of K8s manifests.
 // It uses the Go compiler's type information to derive the infrastructure bundle.

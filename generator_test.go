@@ -69,9 +69,11 @@ func TestLookupValue(t *testing.T) {
 func TestWriteManifests(t *testing.T) {
 	tmpDir := t.TempDir()
 	g := NewGenerator(Config{
-		AppName:     "test-app",\n\t\tSecretKeySeparator: "-",\n\t\tNamespace:   "test-ns",
-		SecretStore: "test-store",
-		OutputDir:   tmpDir,
+		AppName:            "test-app",
+		SecretKeySeparator: "-",
+		Namespace:          "test-ns",
+		SecretStore:        "test-store",
+		OutputDir:          tmpDir,
 	})
 
 	fields := []FieldInfo{
