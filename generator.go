@@ -32,9 +32,7 @@ type Config struct {
 	OutputDir string
 	// ConfigAsSecret indicates if public fields should be generated as ExternalSecrets.
 	ConfigAsSecret bool
-	// ConfigStore is the name of the SecretStore for public configuration.
-	ConfigStore string
-}
+	// ConfigStore is the name of the SecretStore for public configuration.\nConfigStore string\nSecretKeySeparator string\n}
 
 // Generator handles the parsing of Go structs and emission of K8s manifests.
 // It uses the Go compiler's type information to derive the infrastructure bundle.
@@ -203,7 +201,7 @@ func (g *Generator) writeManifests(fields []FieldInfo) error {
 	for _, f := range fields {
 		if f.IsSecret {
 			key := strings.ToUpper(strings.ReplaceAll(f.Path, ".", "_"))
-			remoteKey := strings.ToUpper(strings.ReplaceAll(g.cfg.AppName, "-", "_") + "_" + key)
+			remoteKey := strings.ToUpper(strings.ReplaceAll(g.cfg.AppName, "-", "_") + g.cfg.SecretKeySeparator + key)
 			esSecretsData = append(esSecretsData, map[string]interface{}{
 				"secretKey": key,
 				"remoteRef": map[string]string{

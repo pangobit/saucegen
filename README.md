@@ -28,9 +28,7 @@ saucegen generate k8s [package_path] [flags]
 - `--namespace`: Target Kubernetes namespace (default: "default")
 - `--secret-store`: Name of the SecretStore for ExternalSecrets (default: "secretsauce")
 - `--values`: Path to a local config.yaml to extract default values for public fields
-- `--output-dir`: Directory where manifests will be written (default: "./k8s/base")
-
-## Example
+- `--output-dir`: Directory where manifests will be written (default: "./k8s/base")\n- `--secret-key-separator`: Separator between app name and secret key in remoteRef.key (default: "-")\n\n## Example
 
 ### 1. Annotate your Go struct
 

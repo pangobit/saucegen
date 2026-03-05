@@ -69,8 +69,7 @@ func TestLookupValue(t *testing.T) {
 func TestWriteManifests(t *testing.T) {
 	tmpDir := t.TempDir()
 	g := NewGenerator(Config{
-		AppName:     "test-app",
-		Namespace:   "test-ns",
+		AppName:     "test-app",\n\t\tSecretKeySeparator: "-",\n\t\tNamespace:   "test-ns",
 		SecretStore: "test-store",
 		OutputDir:   tmpDir,
 	})
@@ -121,7 +120,7 @@ func TestWriteManifests(t *testing.T) {
 		if m["secretKey"] == "DATABASE_PASSWORD" {
 			found = true
 			ref := m["remoteRef"].(map[string]interface{})
-			if ref["key"] != "TEST_APP_DATABASE_PASSWORD" {
+			if ref["key"] != "TEST_APP-DATABASE_PASSWORD" {
 				t.Errorf("unexpected remoteRef key: %v", ref["key"])
 			}
 		}
