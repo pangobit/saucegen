@@ -158,11 +158,9 @@ func (g *Generator) walkStruct(t *types.Struct, prefix string, values map[string
 		}
 
 		var val interface{}
-		if !isSecret {
-			val = g.lookupValue(currentPath, values)
-			if val == nil && defaultTag != "" {
-				val = defaultTag
-			}
+		val = g.lookupValue(currentPath, values)
+		if val == nil && defaultTag != "" {
+			val = defaultTag
 		}
 
 		fields = append(fields, FieldInfo{
@@ -354,14 +352,10 @@ func (g *Generator) writeManifests(fields []FieldInfo) error {
 	defaults := make(map[string]interface{})
 	for _, f := range fields {
 		key := strings.ToUpper(strings.ReplaceAll(f.Path, ".", "_"))
-		if f.IsSecret {
-			defaults[key] = ""
+		if f.Value != nil {
+			defaults[key] = f.Value
 		} else {
-			if f.Value != nil {
-				defaults[key] = f.Value
-			} else {
-				defaults[key] = ""
-			}
+			defaults[key] = ""
 		}
 	}
 	if err := g.writeYAML(filepath.Join(g.cfg.OutputDir, "defaults.yaml"), defaults); err != nil {
